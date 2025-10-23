@@ -3,57 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agniphy | Learn Physics Smarter</title>
+  <title>Agniphy - Learn Physics Smarter</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
+  <header class="hero">
     <nav class="navbar">
       <div class="logo">Agniphy</div>
-      <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Sign Up</a></li>
-      </ul>
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#about">About</a>
+        <a href="#vision">Vision</a>
+        <a href="#contact">Contact</a>
+      </div>
     </nav>
+
+    <div class="hero-content">
+      <h1>Welcome to <span>Agniphy</span></h1>
+      <p>Empowering learners to explore the beauty of physics — from fundamentals to frontiers.</p>
+      <div class="buttons">
+        <button class="btn-primary">Get Started</button>
+        <button class="btn-secondary">Log In</button>
+      </div>
+    </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Welcome to Agniphy</h1>
-      <p>Empowering the next generation of physics learners through innovation, clarity, and curiosity.</p>
-      <button class="cta">Get Started</button>
-    </div>
+  <section id="about" class="section about">
+    <h2>About Us</h2>
+    <p>
+      Agniphy is an educational platform dedicated to simplifying complex concepts in physics.
+      Our mission is to make learning interactive, accessible, and exciting for every student.
+      Whether you're preparing for board exams or exploring advanced topics, Agniphy guides
+      you step by step with structured study materials, visual explanations, and engaging resources.
+    </p>
   </section>
 
-  <section id="about" class="about">
-    <h2>About Agniphy</h2>
+  <section id="vision" class="section vision">
+    <h2>Our Vision & Mission</h2>
     <p>
-      Agniphy is an educational platform dedicated to simplifying the world of physics for students across India.
-      We bring together interactive lessons, board-wise study materials, and video-based learning to make physics engaging and accessible.
+      At Agniphy, we believe knowledge is not memorized — it’s experienced.  
+      Our vision is to ignite curiosity and make every learner fall in love with physics.
+      We aim to build a community of passionate students who can think critically, explore deeply,
+      and innovate fearlessly.
     </p>
-
-    <div class="vision">
-      <h3>Our Vision</h3>
-      <p>To ignite curiosity and empower learners to explore the universe through physics.</p>
-    </div>
-
-    <div class="mission">
-      <h3>Our Mission</h3>
-      <p>
-        We aim to provide comprehensive and visually engaging physics content aligned with major education boards, helping students learn smarter and deeper.
-      </p>
-    </div>
-
-    <blockquote class="inspiration">
-      "The beauty of physics lies in understanding the universe — and at Agniphy, we make that journey simple and fascinating."
+    <blockquote>
+      “The universe is not only stranger than we imagine, it is stranger than we <em>can</em> imagine.”
     </blockquote>
   </section>
 
-  <footer>
-    <p>© 2025 Agniphy. All rights reserved.</p>
-    <p>Contact: info@agniphy.com</p>
+  <section id="join" class="section join">
+    <h2>Join the Agniphy Learning Journey</h2>
+    <p>Start your personalized learning experience today.</p>
+    <div class="auth-buttons">
+      <button class="btn-google">Sign in with Google</button>
+      <button class="btn-facebook">Sign in with Facebook</button>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <p>© 2025 Agniphy. All Rights Reserved.</p>
   </footer>
 
   <script src="script.js"></script>
