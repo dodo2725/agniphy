@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agniphy Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <h1>Choose Your Education Board</h1>
+  </header>
+
+  <main class="board-selection">
+    <div class="board-card" onclick="selectBoard('CBSE')">CBSE</div>
+    <div class="board-card" onclick="selectBoard('ICSE')">ICSE</div>
+    <div class="board-card" onclick="selectBoard('WBCHSE')">WBCHSE</div>
+    <div class="board-card" onclick="selectBoard('State Board')">Other State Boards</div>
+  </main>
+
+  <script src="boards.js" type="module"></script>
+</body>
+</html>
