@@ -1,17 +1,181 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
+/* === GLOBAL STYLES === */
+* {
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* === NAVIGATION BAR === */
 header {
-  background-color: #ff4500;
-  color: white;
-  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
-main {
-  padding: 40px;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4fc3f7;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #4fc3f7;
+}
+
+/* === HERO SECTION === */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: radial-gradient(circle at top left, #283e51, #0a2342);
+  padding: 2rem;
+  animation: fadeIn 1s ease-in;
+}
+
+.hero-content {
+  max-width: 700px;
+  animation: slideUp 1s ease forwards;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: #4fc3f7;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #ddd;
+  margin-bottom: 2rem;
+}
+
+.cta {
+  background: #4fc3f7;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0a2342;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.cta:hover {
+  background: #81d4fa;
+}
+
+/* === ABOUT SECTION === */
+.about {
+  padding: 6rem 2rem;
+  text-align: center;
+  background: #16222a;
+}
+
+.about h2 {
+  font-size: 2rem;
+  color: #4fc3f7;
+  margin-bottom: 1rem;
+}
+
+.about p {
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+  color: #ccc;
+}
+
+.about h3 {
+  color: #81d4fa;
+  margin-bottom: 0.5rem;
+}
+
+.vision, .mission {
+  margin-bottom: 2rem;
+}
+
+.inspiration {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #b3e5fc;
+  border-left: 3px solid #4fc3f7;
+  padding-left: 1rem;
+  margin-top: 2rem;
+}
+
+/* === FOOTER === */
+footer {
+  background: #0b141a;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+footer p {
+  margin: 0.3rem 0;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 2.3rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .about p {
+    font-size: 0.95rem;
+  }
 }
