@@ -7,33 +7,75 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="section">
-    <h2 id="boardTitle">Select Your Class</h2>
+  <header class="navbar">
+    <h1 class="logo">Agniphy</h1>
+    <button class="btn-secondary" id="logoutBtn">Logout</button>
   </header>
 
-  <main class="board-selection">
-    <div class="board-card" data-class="10">Class 10</div>
-    <div class="board-card" data-class="11">Class 11</div>
-    <div class="board-card" data-class="12">Class 12</div>
-  </main>
+  <section class="section">
+    <h2 id="boardTitle">Select Your Class</h2>
+    <div class="board-selection">
+      <div class="board-card" data-class="10">Class 10</div>
+      <div class="board-card" data-class="11">Class 11</div>
+      <div class="board-card" data-class="12">Class 12</div>
+    </div>
+  </section>
 
   <footer>
     <p>© 2025 Agniphy. All Rights Reserved.</p>
   </footer>
 
-  <script>
-    // Display selected board
-    const board = localStorage.getItem("selectedBoard");
-    document.getElementById("boardTitle").innerText = `Select Your Class (${board})`;
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getAuth, signOut, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
-    // Handle class selection
+    // === Firebase Config ===
+    const firebaseConfig = {
+      apiKey: "AIzaSyAhCXxGgE-2ggd16OJRiRgn6F-rn6bsi3w",
+      authDomain: "agniphy-19867.firebaseapp.com",
+      projectId: "agniphy-19867",
+      storageBucket: "agniphy-19867.firebasestorage.app",
+      messagingSenderId: "325150822783",
+      appId: "1:325150822783:web:6a23fe5ffa678c0e6c4a4a",
+      measurementId: "G-QBLLVV8YHM"
+    };
+
+    // === Initialize Firebase ===
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // === Check if user is logged in ===
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        alert("You must log in first!");
+        window.location.href = "index.html";
+      }
+    });
+
+    // === Check if board is selected ===
+    const board = localStorage.getItem("selectedBoard");
+    if (!board) {
+      alert("Please select your board first!");
+      window.location.href = "boards.html";
+    } else {
+      document.getElementById("boardTitle").innerText = `Select Your Class (${board})`;
+    }
+
+    // === Logout ===
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      localStorage.clear();
+      window.location.href = "index.html";
+    });
+
+    // === Handle Class Selection ===
     document.querySelectorAll(".board-card").forEach(card => {
       card.addEventListener("click", () => {
         const selectedClass = card.getAttribute("data-class");
         localStorage.setItem("selectedClass", selectedClass);
-        alert(`You selected ${board} - Class ${selectedClass}`);
-        // Redirect to subject page later
-        // window.location.href = "subjects.html";
+        alert(`✅ You selected ${board} - Class ${selectedClass}`);
+        window.location.href = "syllabus.html";
       });
     });
   </script>
