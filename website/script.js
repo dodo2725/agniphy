@@ -1,8 +1,15 @@
-// === Import Firebase SDK ===
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+// === Import Firebase Modules ===
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
-// === Your Firebase Config ===
+// === Firebase Config ===
 const firebaseConfig = {
   apiKey: "AIzaSyAhCXxGgE-2ggd16OJRiRgn6F-rn6bsi3w",
   authDomain: "agniphy-19867.firebaseapp.com",
@@ -17,35 +24,45 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// === Google Sign-In ===
+// === GOOGLE LOGIN ===
 const googleBtn = document.querySelector(".btn-google");
 if (googleBtn) {
   googleBtn.addEventListener("click", async () => {
     const provider = new GoogleAuthProvider();
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      alert(`Welcome ${user.displayName}!`);
-      window.location.href = "boards.html"; // redirect after login
+      await signInWithPopup(auth, provider);
+      window.location.href = "boards.html"; // redirect after success
     } catch (error) {
-      alert("Google Sign-in failed: " + error.message);
+      alert("Google login failed: " + error.message);
     }
   });
 }
 
-// === Facebook Sign-In ===
+// === FACEBOOK LOGIN ===
 const fbBtn = document.querySelector(".btn-facebook");
 if (fbBtn) {
   fbBtn.addEventListener("click", async () => {
     const provider = new FacebookAuthProvider();
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      alert(`Welcome ${user.displayName}!`);
+      await signInWithPopup(auth, provider);
       window.location.href = "boards.html";
     } catch (error) {
-      alert("Facebook Sign-in failed: " + error.message);
+      alert("Facebook login failed: " + error.message);
     }
   });
 }
 
+// === LOGOUT FUNCTION ===
+window.logoutUser = async () => {
+  await signOut(auth);
+  window.location.href = "index.html";
+};
+
+// === KEEP SESSION ACTIVE ===
+onAuthStateChanged(auth, user => {
+  if (user) {
+    console.log("✅ Logged in as:", user.displayName);
+  } else {
+    console.log("⚠️ Logged out");
+  }
+});
