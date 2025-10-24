@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agniphy Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Your Board | Agniphy</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="dashboard-header">
-    <h1>Choose Your Education Board</h1>
+  <header class="section">
+    <h2>Choose Your Education Board</h2>
   </header>
 
   <main class="board-selection">
-    <div class="board-card" onclick="selectBoard('CBSE')">CBSE</div>
-    <div class="board-card" onclick="selectBoard('ICSE')">ICSE</div>
-    <div class="board-card" onclick="selectBoard('WBCHSE')">WBCHSE</div>
-    <div class="board-card" onclick="selectBoard('State Board')">Other State Boards</div>
+    <div class="board-card" data-board="CBSE">CBSE</div>
+    <div class="board-card" data-board="ICSE">ICSE</div>
+    <div class="board-card" data-board="WBCHSE">WBCHSE</div>
+    <div class="board-card" data-board="STATE">Other State Boards</div>
   </main>
+
+  <footer>
+    <p>© 2025 Agniphy. All Rights Reserved.</p>
+  </footer>
 
   <script src="boards.js" type="module"></script>
 </body>
