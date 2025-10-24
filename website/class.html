@@ -1,45 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Select Class | Agniphy</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Your Class | Agniphy</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="navbar">
-    <h1 class="logo">Agniphy</h1>
-    <button class="btn-secondary" id="logoutBtn">Logout</button>
+  <header class="section">
+    <h2 id="boardTitle">Select Your Class</h2>
   </header>
 
-  <section class="section">
-    <h2>Select Your Class</h2>
-    <div class="board-selection">
-      <div class="board-card" data-class="10">Class 10</div>
-      <div class="board-card" data-class="11">Class 11</div>
-      <div class="board-card" data-class="12">Class 12</div>
-    </div>
-  </section>
+  <main class="board-selection">
+    <div class="board-card" data-class="10">Class 10</div>
+    <div class="board-card" data-class="11">Class 11</div>
+    <div class="board-card" data-class="12">Class 12</div>
+  </main>
 
-  <script type="module">
-    import { requireLogin, logoutUser } from "./script.js";
+  <footer>
+    <p>© 2025 Agniphy. All Rights Reserved.</p>
+  </footer>
 
-    // Require login and board selection
-    requireLogin();
-    if (!localStorage.getItem("selectedBoard")) {
-      alert("Please select your board first!");
-      window.location.href = "boards.html";
-    }
+  <script>
+    // Display selected board
+    const board = localStorage.getItem("selectedBoard");
+    document.getElementById("boardTitle").innerText = `Select Your Class (${board})`;
 
-    // Logout
-    document.getElementById("logoutBtn").addEventListener("click", logoutUser);
-
-    // Class selection
+    // Handle class selection
     document.querySelectorAll(".board-card").forEach(card => {
       card.addEventListener("click", () => {
         const selectedClass = card.getAttribute("data-class");
         localStorage.setItem("selectedClass", selectedClass);
-        window.location.href = "syllabus.html";
+        alert(`You selected ${board} - Class ${selectedClass}`);
+        // Redirect to subject page later
+        // window.location.href = "subjects.html";
       });
     });
   </script>
