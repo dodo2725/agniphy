@@ -9,7 +9,7 @@
 <body>
   <header class="navbar">
     <h1 class="logo">Agniphy</h1>
-    <button class="btn-secondary" onclick="logoutUser()">Logout</button>
+    <button class="btn-secondary" id="logoutBtn">Logout</button>
   </header>
 
   <section class="section">
@@ -21,7 +21,51 @@
     </div>
   </section>
 
-  <script type="module" src="script.js"></script>
-  <script src="class.js"></script>
+  <script type="module">
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAhCXxGgE-2ggd16OJRiRgn6F-rn6bsi3w",
+      authDomain: "agniphy-19867.firebaseapp.com",
+      projectId: "agniphy-19867",
+      storageBucket: "agniphy-19867.firebasestorage.app",
+      messagingSenderId: "325150822783",
+      appId: "1:325150822783:web:6a23fe5ffa678c0e6c4a4a",
+      measurementId: "G-QBLLVV8YHM"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Check login and board selection
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        alert("You must log in first!");
+        window.location.href = "index.html";
+      } else if (!localStorage.getItem("selectedBoard")) {
+        alert("Please select your board first!");
+        window.location.href = "boards.html";
+      }
+    });
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+
+    // Class selection
+    window.selectClass = function(selectedClass) {
+      const board = localStorage.getItem("selectedBoard");
+      if (board && selectedClass) {
+        localStorage.setItem("selectedClass", selectedClass);
+        window.location.href = "syllabus.html";
+      } else {
+        alert("Please select your board first!");
+        window.location.href = "boards.html";
+      }
+    };
+  </script>
 </body>
 </html>
