@@ -1,15 +1,9 @@
-// === Import Firebase Modules ===
+// script.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, signOut, onAuthStateChanged } 
+  from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
-// === Firebase Config ===
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyAhCXxGgE-2ggd16OJRiRgn6F-rn6bsi3w",
   authDomain: "agniphy-19867.firebaseapp.com",
@@ -20,49 +14,43 @@ const firebaseConfig = {
   measurementId: "G-QBLLVV8YHM"
 };
 
-// === Initialize Firebase ===
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
-// === GOOGLE LOGIN ===
-const googleBtn = document.querySelector(".btn-google");
-if (googleBtn) {
-  googleBtn.addEventListener("click", async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      window.location.href = "boards.html"; // redirect after success
-    } catch (error) {
-      alert("Google login failed: " + error.message);
-    }
-  });
-}
-
-// === FACEBOOK LOGIN ===
-const fbBtn = document.querySelector(".btn-facebook");
-if (fbBtn) {
-  fbBtn.addEventListener("click", async () => {
-    const provider = new FacebookAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
+// Google login
+export function loginWithGoogle() {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
+    .then(result => {
       window.location.href = "boards.html";
-    } catch (error) {
-      alert("Facebook login failed: " + error.message);
-    }
+    })
+    .catch(err => alert("Google login failed: " + err.message));
+}
+
+// Facebook login
+export function loginWithFacebook() {
+  const provider = new FacebookAuthProvider();
+  signInWithPopup(auth, provider)
+    .then(result => {
+      window.location.href = "boards.html";
+    })
+    .catch(err => alert("Facebook login failed: " + err.message));
+}
+
+// Logout
+export function logoutUser() {
+  signOut(auth).then(() => {
+    window.location.href = "index.html";
   });
 }
 
-// === LOGOUT FUNCTION ===
-window.logoutUser = async () => {
-  await signOut(auth);
-  window.location.href = "index.html";
-};
-
-// === KEEP SESSION ACTIVE ===
-onAuthStateChanged(auth, user => {
-  if (user) {
-    console.log("✅ Logged in as:", user.displayName);
-  } else {
-    console.log("⚠️ Logged out");
-  }
-});
+// Check login state (can be called on pages that require auth)
+export function requireLogin(redirectTo="index.html") {
+  onAuthStateChanged(auth, user => {
+    if (!user) {
+      alert("You must log in first!");
+      window.location.href = redirectTo;
+    }
+  });
+}
