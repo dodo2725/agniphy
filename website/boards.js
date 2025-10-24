@@ -37,6 +37,6 @@ document.querySelectorAll(".board-card").forEach(card => {
   card.addEventListener("click", () => {
     const selectedBoard = card.getAttribute("data-board");
     localStorage.setItem("selectedBoard", selectedBoard);
-    window.location.href = "classes.html"; // redirect to class selection
+  window.location.href = "class.html";
   });
 });
