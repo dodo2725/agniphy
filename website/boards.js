@@ -1,28 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Select Board | Agniphy</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="navbar">
-    <h1 class="logo">Agniphy</h1>
-    <button class="btn-secondary" onclick="logoutUser()">Logout</button>
-  </header>
+// Import Firebase auth
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
-  <section class="section">
-    <h2>Select Your Education Board</h2>
-    <div class="board-selection">
-      <div class="board-card" onclick="selectBoard('CBSE')">CBSE</div>
-      <div class="board-card" onclick="selectBoard('ICSE')">ICSE</div>
-      <div class="board-card" onclick="selectBoard('WBCHSE')">WBCHSE</div>
-      <div class="board-card" onclick="selectBoard('State Board')">State Board</div>
-    </div>
-  </section>
+// Initialize Firebase auth (use the same config from script.js)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 
-  <script type="module" src="script.js"></script>
-  <script src="boards.js"></script>
-</body>
-</html>
+const firebaseConfig = {
+  apiKey: "AIzaSyAhCXxGgE-2ggd16OJRiRgn6F-rn6bsi3w",
+  authDomain: "agniphy-19867.firebaseapp.com",
+  projectId: "agniphy-19867",
+  storageBucket: "agniphy-19867.firebasestorage.app",
+  messagingSenderId: "325150822783",
+  appId: "1:325150822783:web:6a23fe5ffa678c0e6c4a4a",
+  measurementId: "G-QBLLVV8YHM"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Check if user is logged in
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    alert("You must log in first!");
+    window.location.href = "index.html"; // redirect to login page
+  }
+});
+
+// Logout button
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "index.html";
+});
+
+// Board selection
+document.querySelectorAll(".board-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const selectedBoard = card.getAttribute("data-board");
+    localStorage.setItem("selectedBoard", selectedBoard);
+    window.location.href = "classes.html"; // redirect to class selection
+  });
+});
