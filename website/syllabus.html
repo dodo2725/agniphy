@@ -92,15 +92,22 @@
           "12": ["Electrostatics", "Magnetism", "Current Electricity", "Optics", "Dual Nature of Matter"]
         }
       };
-
+    
       // === Display syllabus topics ===
       const topics = syllabusData[board]?.[selectedClass] || ["Syllabus not found!"];
-      topics.forEach(topic => {
-        const card = document.createElement("div");
-        card.classList.add("board-card");
-        card.textContent = topic;
-        contentEl.appendChild(card);
-      });
+    topics.forEach(topic => {
+  const card = document.createElement("div");
+  card.classList.add("board-card");
+  card.textContent = topic;
+  
+  card.addEventListener("click", () => {
+    localStorage.setItem("selectedTopic", topic);
+    window.location.href = "chapter.html";
+  });
+  
+  contentEl.appendChild(card);
+});
+
     }
   </script>
 </body>
