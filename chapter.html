@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter Details | Agniphy</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chapter-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    #chapterTitle {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #ffd166;
+    }
+
+    .chapter-image {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .chapter-text {
+      text-align: left;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #f8f9fa;
+    }
+
+    iframe {
+      width: 100%;
+      height: 315px;
+      border-radius: 12px;
+      margin-top: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .chat-section {
+      margin-top: 40px;
+      padding: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .chat-box {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .chat-box input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .chat-box button {
+      background-color: #06d6a0;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .chat-box button:hover {
+      background-color: #05b88a;
+    }
+
+    .response-box {
+      margin-top: 15px;
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 8px;
+      min-height: 80px;
+      color: #fff;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      background: #ffd166;
+      color: #000;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover {
+      background: #ffca3a;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <h1 class="logo">Agniphy</h1>
+    <button class="btn-secondary" id="logoutBtn">Logout</button>
+  </header>
+
+  <main class="section">
+    <div class="chapter-container">
+      <h2 id="chapterTitle">Loading chapter...</h2>
+      <img id="chapterImage" class="chapter-image" src="" alt="Chapter Illustration" />
+      <div id="chapterContent" class="chapter-text"></div>
+      <div id="chapterVideo"></div>
+
+      <a href="syllabus.html" class="back-btn">← Back to Syllabus</a>
+
+      <div class="chat-section">
+        <h3>💬 Ask Agniphy AI Assistant</h3>
+        <p>Have a doubt? Ask below and get an instant AI explanation.</p>
+        <div class="chat-box">
+          <input id="questionInput" type="text" placeholder="Ask your question here..." />
+          <button id="askBtn">Ask</button>
+        </div>
+        <div id="responseBox" class="response-box"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Agniphy. All Rights Reserved.</p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getAuth, signOut, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAhCXxGgE-2ggd16OJRiRgn6F-rn6bsi3w",
+      authDomain: "agniphy-19867.firebaseapp.com",
+      projectId: "agniphy-19867",
+      storageBucket: "agniphy-19867.firebasestorage.app",
+      messagingSenderId: "325150822783",
+      appId: "1:325150822783:web:6a23fe5ffa678c0e6c4a4a",
+      measurementId: "G-QBLLVV8YHM"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        alert("Please log in first!");
+        window.location.href = "index.html";
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      localStorage.clear();
+      window.location.href = "index.html";
+    });
+
+    const board = localStorage.getItem("selectedBoard");
+    const selectedClass = localStorage.getItem("selectedClass");
+    const selectedTopic = localStorage.getItem("selectedTopic");
+
+    const titleEl = document.getElementById("chapterTitle");
+    const imgEl = document.getElementById("chapterImage");
+    const contentEl = document.getElementById("chapterContent");
+    const videoEl = document.getElementById("chapterVideo");
+
+    if (!board || !selectedClass || !selectedTopic) {
+      alert("Please select your board, class, and topic first!");
+      window.location.href = "syllabus.html";
+    } else {
+      titleEl.innerText = `${selectedTopic} (${board} - Class ${selectedClass})`;
+
+      const chapters = {
+        "Light – Reflection & Refraction": {
+          text: `
+            <p>Light travels in straight lines and obeys the laws of reflection and refraction.</p>
+            <ul>
+              <li><strong>Reflection:</strong> The bouncing of light from a surface.</li>
+              <li><strong>Refraction:</strong> The bending of light when passing from one medium to another.</li>
+            </ul>
+          `,
+          image: "https://upload.wikimedia.org/wikipedia/commons/5/53/Reflection_and_refraction_of_light.svg",
+          video: "https://www.youtube.com/embed/y5vWb2e6tRk"
+        }
+      };
+
+      const chapter = chapters[selectedTopic] || {
+        text: `<p>Detailed notes for <strong>${selectedTopic}</strong> will be available soon.</p>`,
+        image: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg",
+        video: null
+      };
+
+      imgEl.src = chapter.image;
+      contentEl.innerHTML = chapter.text;
+      if (chapter.video) {
+        videoEl.innerHTML = `<iframe src="${chapter.video}" allowfullscreen></iframe>`;
+      }
+    }
+
+    // === ChatGPT Integration ===
+    const askBtn = document.getElementById("askBtn");
+    const questionInput = document.getElementById("questionInput");
+    const responseBox = document.getElementById("responseBox");
+
+    askBtn.addEventListener("click", async () => {
+      const question = questionInput.value.trim();
+      if (!question) {
+        alert("Please type your question.");
+        return;
+      }
+      responseBox.innerHTML = "⏳ Thinking...";
+
+      try {
+        const res = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+         },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [
+              { role: "system", content: "You are a helpful science tutor for students." },
+              { role: "user", content: question }
+            ]
+          })
+        });
+
+        const data = await res.json();
+        responseBox.innerHTML = data.choices?.[0]?.message?.content || "Sorry, I couldn’t answer that.";
+      } catch (err) {
+        console.error(err);
+        responseBox.innerHTML = "⚠️ Error fetching AI response.";
+      }
+    });
+  </script>
+</body>
+</html>
