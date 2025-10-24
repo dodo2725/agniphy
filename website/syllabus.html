@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Syllabus | Agniphy</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ✅ Navbar -->
+  <header class="navbar">
+    <h1 class="logo">Agniphy</h1>
+    <button class="btn-secondary" id="logoutBtn">Logout</button>
+  </header>
+
+  <main class="section">
+    <h2 id="syllabusTitle">Loading syllabus...</h2>
+    <div id="syllabusContent" class="board-selection"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Agniphy. All Rights Reserved.</p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getAuth, signOut, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    // === Firebase Config ===
+    const firebaseConfig = {
+      apiKey: "AIzaSyAhCXxGgE-2ggd16OJRiRgn6F-rn6bsi3w",
+      authDomain: "agniphy-19867.firebaseapp.com",
+      projectId: "agniphy-19867",
+      storageBucket: "agniphy-19867.firebasestorage.app",
+      messagingSenderId: "325150822783",
+      appId: "1:325150822783:web:6a23fe5ffa678c0e6c4a4a",
+      measurementId: "G-QBLLVV8YHM"
+    };
+
+    // === Initialize Firebase ===
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // === Check if user logged in ===
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        alert("You must log in first!");
+        window.location.href = "index.html";
+      }
+    });
+
+    // === Logout Function ===
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      localStorage.clear();
+      window.location.href = "index.html";
+    });
+
+    // === Load Syllabus ===
+    const board = localStorage.getItem("selectedBoard");
+    const selectedClass = localStorage.getItem("selectedClass");
+
+    const titleEl = document.getElementById("syllabusTitle");
+    const contentEl = document.getElementById("syllabusContent");
+
+    if (!board || !selectedClass) {
+      alert("Please select your board and class first!");
+      window.location.href = "boards.html";
+    } else {
+      titleEl.innerText = `${board} - Class ${selectedClass} Syllabus`;
+
+      // === Example syllabus data (You can connect Firebase later) ===
+      const syllabusData = {
+        CBSE: {
+          "10": ["Light – Reflection & Refraction", "Electricity", "Magnetic Effects of Electric Current", "Sources of Energy", "The Human Eye and Colourful World"],
+          "11": ["Physical World", "Units and Measurements", "Laws of Motion", "Work, Energy and Power", "Gravitation"],
+          "12": ["Electrostatics", "Current Electricity", "Magnetism and Matter", "Electromagnetic Waves", "Ray Optics and Wave Optics"]
+        },
+        ICSE: {
+          "10": ["Force and Motion", "Sound", "Light", "Electricity and Magnetism", "Heat"],
+          "11": ["Measurements", "Motion in a Straight Line", "Work, Power, and Energy", "Thermodynamics", "Gravitation"],
+          "12": ["Electrostatics", "Current Electricity", "Alternating Current", "Optics", "Modern Physics"]
+        },
+        WBCHSE: {
+          "11": ["Physical World", "Motion in One Dimension", "Thermal Properties of Matter", "Work, Power, and Energy", "Gravitation"],
+          "12": ["Electrostatics", "Current Electricity", "Magnetism", "Electromagnetic Induction", "Wave Optics"]
+        },
+        STATE: {
+          "10": ["Motion", "Light", "Sound", "Force", "Electricity"],
+          "11": ["Measurement", "Work and Energy", "Waves", "Gravitation", "Kinetic Theory"],
+          "12": ["Electrostatics", "Magnetism", "Current Electricity", "Optics", "Dual Nature of Matter"]
+        }
+      };
+
+      // === Display syllabus topics ===
+      const topics = syllabusData[board]?.[selectedClass] || ["Syllabus not found!"];
+      topics.forEach(topic => {
+        const card = document.createElement("div");
+        card.classList.add("board-card");
+        card.textContent = topic;
+        contentEl.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
