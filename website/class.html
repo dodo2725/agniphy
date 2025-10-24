@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Class | Agniphy</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <h1 class="logo">Agniphy</h1>
+    <button class="btn-secondary" onclick="logoutUser()">Logout</button>
+  </header>
+
+  <section class="section">
+    <h2>Select Your Class</h2>
+    <div class="board-selection">
+      <div class="board-card" onclick="selectClass('10')">Class 10</div>
+      <div class="board-card" onclick="selectClass('11')">Class 11</div>
+      <div class="board-card" onclick="selectClass('12')">Class 12</div>
+    </div>
+  </section>
+
+  <script type="module" src="script.js"></script>
+  <script src="class.js"></script>
+</body>
+</html>
