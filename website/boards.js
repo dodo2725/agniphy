@@ -1,7 +1,5 @@
 // Import Firebase auth
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-// Initialize Firebase auth (use the same config from script.js)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 
 const firebaseConfig = {
@@ -17,26 +15,29 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Check if user is logged in
+// ✅ Check if user is logged in
 onAuthStateChanged(auth, user => {
   if (!user) {
     alert("You must log in first!");
-    window.location.href = "index.html"; // redirect to login page
+    window.location.href = "index.html";
   }
 });
 
-// Logout button
+// ✅ Only attach logout handler if button exists
 const logoutBtn = document.getElementById("logoutBtn");
-logoutBtn.addEventListener("click", async () => {
-  await signOut(auth);
-  window.location.href = "index.html";
-});
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    await signOut(auth);
+    window.location.href = "index.html";
+  });
+}
 
-// Board selection
+// ✅ Board selection works now
 document.querySelectorAll(".board-card").forEach(card => {
   card.addEventListener("click", () => {
     const selectedBoard = card.getAttribute("data-board");
     localStorage.setItem("selectedBoard", selectedBoard);
-  window.location.href = "class.html";
+    window.location.href = "class.html";
   });
 });
+
